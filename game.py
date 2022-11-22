@@ -14,7 +14,7 @@ class Ghost:
 		resized_image= img.resize((150, 105), Image.Resampling.LANCZOS)
 		im1 = resized_image.save("downsized_images/downsize_ghost.png")
 
-	def get_obstacle(self, msg):
+	def get_obstacle(self, obs):
 		self.image = PhotoImage(file="downsized_images/downsize_ghost.png")
 		return self.image
 
@@ -23,10 +23,10 @@ class Castle1:
 
 	def __init__(self):
 		img = (Image.open("images/castle1.png"))
-		resized_image= img.resize((150, 105), Image.Resampling.LANCZOS)
+		resized_image= img.resize((200, 405), Image.Resampling.LANCZOS)
 		im1 = resized_image.save("downsized_images/downsize_castle1.png")
 
-	def get_obstacle(self, msg):
+	def get_obstacle(self, obs):
 		self.image = PhotoImage(file="downsized_images/downsize_castle1.png")
 		return self.image
 
@@ -35,10 +35,10 @@ class Castle2:
 
 	def __init__(self):
 		img = (Image.open("images/castle2.png"))
-		resized_image= img.resize((150, 105), Image.Resampling.LANCZOS)
+		resized_image= img.resize((200, 405), Image.Resampling.LANCZOS)
 		im1 = resized_image.save("downsized_images/downsize_castle2.png")
 
-	def get_obstacle(self, msg):
+	def get_obstacle(self, obs):
 		self.image = PhotoImage(file="downsized_images/downsize_castle2.png")
 		return self.image
 
@@ -47,10 +47,10 @@ class Tree:
 
 	def __init__(self):
 		img = (Image.open("images/tree.png"))
-		resized_image= img.resize((150, 105), Image.Resampling.LANCZOS)
+		resized_image= img.resize((200, 405), Image.Resampling.LANCZOS)
 		im1 = resized_image.save("downsized_images/downsize_tree.png")
 
-	def get_obstacle(self, msg):
+	def get_obstacle(self, obs):
 		self.image = PhotoImage(file="downsized_images/downsize_tree.png")
 		return self.image
 
@@ -91,8 +91,8 @@ main.geometry('550x700')
 center(main)
 
 BIRD_Y = 200
-PIPE_X = 550
-PIPE_HOLE = 0
+OBS_X = 550
+GHOST_POS = 0
 OBS_POS = 0
 NOW_PAUSE = False
 
@@ -107,40 +107,40 @@ else:
 	scoreFile.write(str(BEST_SCORE))
 	scoreFile.close()
 
-w = Canvas(main, width = 550, height = 700, background = "#4EC0CA", bd=0, highlightthickness=0)
+w = Canvas(main, width = 550, height = 700, background = "#464e4f", bd=0, highlightthickness=0)
 w.pack()
 
 birdImg = PhotoImage(file="images/bird.png")
 bird = w.create_image(100, BIRD_Y, image=birdImg)
 
-pipeDown = w.create_image(PIPE_X, PIPE_HOLE, image=g.get_obstacle("Ghost"))
+ghostObs = w.create_image(OBS_X, GHOST_POS, image=g.get_obstacle("Ghost"))
 
 res = key, val = random.choice(list(obsDic.items()))
 if res[0] == 't':
-	obsFig = w.create_image(PIPE_X, OBS_POS, image=t.get_obstacle("Tree"))
+	obsFig = w.create_image(OBS_X, OBS_POS, image=t.get_obstacle("Tree"))
 if res[0] == 'c1':
-	obsFig = w.create_image(PIPE_X, OBS_POS, image=c1.get_obstacle("Castle1"))
+	obsFig = w.create_image(OBS_X, OBS_POS, image=c1.get_obstacle("Castle1"))
 else:
-	obsFig = w.create_image(PIPE_X, OBS_POS, image=c2.get_obstacle("Castle2"))
+	obsFig = w.create_image(OBS_X, OBS_POS, image=c2.get_obstacle("Castle2"))
 
 up_count = 0
 endRectangle = endBest = endScore = None
 
 score_w = w.create_text(15, 45, text="0", font='Impact 60', fill='#ffffff', anchor=W)
 
-def generatePipeHole():
-	global PIPE_HOLE
+def getObsHeight():
+	global GHOST_POS
 	global OBS_POS
 	global SCORE
 	global FRAMERATE
 	SCORE += 1
 	w.itemconfig(score_w, text=str(SCORE))
-	PIPE_HOLE = random.randint(100, 300)
+	GHOST_POS = random.randint(100, 300)
 	OBS_POS = random.randint(600, 600)
 	
 	#print("Score: " + str(SCORE))
 
-generatePipeHole()
+getObsHeight()
 
 def birdUp(event = None):
 	global BIRD_Y
@@ -168,30 +168,30 @@ def birdDown():
 	w.coords(bird, 100, BIRD_Y)
 	if NOW_PAUSE == False: main.after(FRAMERATE, birdDown)
 
-def pipesMotion():
-	global PIPE_X
-	global PIPE_HOLE
+def obsMotion():
+	global OBS_X
+	global GHOST_POS
 	global NOW_PAUSE
 	global OBS_POS
 	global obsFig
 
-	PIPE_X -= 5
-	#w.coords(pipeUp, PIPE_X, 0, PIPE_X + 100, PIPE_HOLE)
-	w.coords(pipeDown, PIPE_X, PIPE_HOLE)
-	w.coords(obsFig, PIPE_X, OBS_POS)
+	OBS_X -= 5
+	#w.coords(pipeUp, OBS_X, 0, OBS_X + 100, GHOST_POS)
+	w.coords(ghostObs, OBS_X, GHOST_POS)
+	w.coords(obsFig, OBS_X, OBS_POS)
 	
-	if PIPE_X < -100: 
-		PIPE_X = 550
+	if OBS_X < -100: 
+		OBS_X = 550
 		res = key, val = random.choice(list(obsDic.items()))
 		if res[0] == 't':
-			obsFig = w.create_image(PIPE_X, OBS_POS, image=t.get_obstacle("Tree"))
+			obsFig = w.create_image(OBS_X, OBS_POS, image=t.get_obstacle("Tree"))
 		elif res[0] == 'c1':
-			obsFig = w.create_image(PIPE_X, OBS_POS, image=c1.get_obstacle("Castle1"))
+			obsFig = w.create_image(OBS_X, OBS_POS, image=c1.get_obstacle("Castle1"))
 		elif res[0] == 'c2':
-			obsFig = w.create_image(PIPE_X, OBS_POS, image=c2.get_obstacle("Castle2"))
-		generatePipeHole()
+			obsFig = w.create_image(OBS_X, OBS_POS, image=c2.get_obstacle("Castle2"))
+		getObsHeight()
 	
-	if NOW_PAUSE == False: main.after(FRAMERATE, pipesMotion)
+	if NOW_PAUSE == False: main.after(FRAMERATE, obsMotion)
 
 def engGameScreen():
 	global endRectangle
@@ -205,11 +205,11 @@ def detectCollision():
 	global NOW_PAUSE
 	global BEST_SCORE
 
-	print("Pipe: ", PIPE_X)
-	print("Pipe hole:", PIPE_HOLE)
+	print("Pipe: ", OBS_X)
+	print("Pipe hole:", GHOST_POS)
 	print("Bird: ", BIRD_Y)
 
-	if (PIPE_X < 150 and PIPE_X + 100 >= 55) and ((BIRD_Y >= PIPE_HOLE - 10 and BIRD_Y < PIPE_HOLE + 10) or (BIRD_Y >= OBS_POS)):
+	if (OBS_X < 150 and OBS_X + 100 >= 55) and ((BIRD_Y >= GHOST_POS - 10 and BIRD_Y < GHOST_POS + 10) or (BIRD_Y >= OBS_POS-100)):
 		#print("Collision")
 		NOW_PAUSE = True
 		if SCORE > BEST_SCORE:
@@ -222,27 +222,27 @@ def detectCollision():
 	if NOW_PAUSE == False: main.after(FRAMERATE, detectCollision)
 
 def restartGame():
-	global PIPE_X
+	global OBS_X
 	global BIRD_Y
 	global SCORE
 	global NOW_PAUSE
 	global FRAMERATE
 
 	BIRD_Y = 200
-	PIPE_X = 550
+	OBS_X = 550
 	SCORE = -1
 	FRAMERATE = 20
 	NOW_PAUSE = False
 	w.delete(endScore)
 	w.delete(endRectangle)
 	w.delete(endBest)
-	generatePipeHole()
+	getObsHeight()
 	main.after(FRAMERATE, birdDown)
-	main.after(FRAMERATE, pipesMotion)
+	main.after(FRAMERATE, obsMotion)
 	main.after(FRAMERATE, detectCollision)
 	
 main.after(FRAMERATE, birdDown)
-main.after(FRAMERATE, pipesMotion)
+main.after(FRAMERATE, obsMotion)
 main.after(FRAMERATE, detectCollision)
 main.bind("<space>", birdUp)
 main.mainloop()
