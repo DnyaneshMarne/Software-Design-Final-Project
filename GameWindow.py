@@ -1,7 +1,6 @@
 from tkinter import *
-import random
-import os
-
+from ObsDynamics import ObsDynamics
+from PIL import Image
 
 class GameWindow:
     __instance = None
@@ -14,31 +13,34 @@ class GameWindow:
     def __init__(self) -> None:
        
         if GameWindow.__instance != None:
-            raise Exception("This class is a Singleton")
+            raise Exception("This class is a Singleton") 
         else:
             GameWindow.__instance = self
-            self.posY = 50
-            self.posX = 50
+            self.posY = 200
+            self.posX = 100
             self.framerate = 20
             self.pause = False
             self.upcount = 0
-
             self._window=Tk()
             self._window.title("Witchy Witch")
-            self._window.geometry('1000x800')
+            self._window.geometry('550x700')
             self._window.resizable(width=False,height= False)
-            self._canvas = Canvas(self._window, width = 1000, height = 800, background = "#4EC0CA")
+            self._canvas = Canvas(self._window, width = 550, height = 700, background = "#10104E")
+            img = (Image.open("background.png"))
+            resized_image= img.resize((550, 400), Image.LANCZOS)
+            self.im1 = resized_image.save("background.png")
+            self.background = PhotoImage(file="background.png")
+            self._backimage = self._canvas.create_image(0,0,anchor= NW, image=self.background)
             self._canvas.pack(expand= True)
-            
-            self.witchImg = PhotoImage(file="flyingwitch.gif")
+            self.witchImg = PhotoImage(file="flyingwitch.png")
             self._witch = self._canvas.create_image(self.posX,self.posY,image=self.witchImg)
-            
+            self.Obstacles = ObsDynamics(self.getInstance())
 
     def witchDown(self):
         
         self.posY += 8
-        if self.posY >= 800: 
-            self.posY= 800
+        if self.posY >= 700: 
+            self.posY= 700
             self.pause = True
         self._canvas.coords(self._witch,self.posX, self.posY)    
         if self.pause == False :
@@ -49,24 +51,38 @@ class GameWindow:
         if self.pause == False: 
             self.posY-= 20
             if self.posY <= 0: self.posY = 0
-            self._canvas.coords(self._witch,50, self.posY)  
+            self._canvas.coords(self._witch, self.posX, self.posY)  
             if self.upcount < 5:
                 self.upcount += 1
                 self._window.after(20,self.witchUp) 
                
             else: self.upcount = 0  
+        else:
+            self.Obstacles.RestartGame()
 
+    def getCanvas(self):        
+        return self._canvas
+    def getWindow(self):
+        return self._window
 
+ 
     def run(self):
         "Run application"
+
         self._window.after(20, self.witchDown)
+        self._window.after(20,self.Obstacles.get_rand_obs)
+        self._window.after(20,self.Obstacles.ObsMotion)
+        self._window.after(20,self.Obstacles.DetectCollision)
         self._window.bind("<space>", self.witchUp)
         self._window.mainloop()
 
 
+
+
 def main():
+
     "EntryPoint"
-    gw = GameWindow()
+    gw = GameWindow.getInstance()
     gw.run()
 
 if __name__ == '__main__':
