@@ -11,6 +11,9 @@ Repo for the software design game
 This game is designed using software design pattern of Singleton, Abstract Factory and Clone using python object oriented code. 
 
 ### Modules used 
+<table>
+  <tr>
+    <td>
 
 1. Python3
 
@@ -21,8 +24,9 @@ This game is designed using software design pattern of Singleton, Abstract Facto
 6. os
 7. abstractmethod, abc
 
-**and some ghosts** ![ghost](https://user-images.githubusercontent.com/64002247/204157258-cbdc9081-eb1c-4cb1-979b-7ec0e5fc333c.png)
-
+      **and some ghosts** </td><td>![ghost](https://user-images.githubusercontent.com/64002247/204157258-cbdc9081-eb1c-4cb1-979b-7ec0e5fc333c.png)
+    </td></tr>
+  </table>
 
 ### Getting Started
 
