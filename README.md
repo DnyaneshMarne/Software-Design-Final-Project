@@ -1,5 +1,5 @@
 # Software-Design-Final-Project
-Repo for the software design game  ![downsize_pumpkin](https://user-images.githubusercontent.com/64002247/204156780-43e5bd58-2c12-476d-8c18-6c8562461912.png)
+Repo for the software design game                                                                 ![downsize_pumpkin](https://user-images.githubusercontent.com/64002247/204156780-43e5bd58-2c12-476d-8c18-6c8562461912.png)
 
 
 
@@ -18,7 +18,7 @@ This game is designed using software design pattern of Singleton, Abstract Facto
 6. os
 7. abstractmethod, abc
 
-and some ghosts ![downsize_ghost](https://user-images.githubusercontent.com/64002247/204156793-1035e6a5-cb13-4327-b8b4-4ca3a37e47c5.png)
+                          .......and some ghosts                          ![downsize_ghost](https://user-images.githubusercontent.com/64002247/204156793-1035e6a5-cb13-4327-b8b4-4ca3a37e47c5.png)
 
 
 ### Getting Started
