@@ -8,7 +8,7 @@ class Obstacles(ABC) :
 	def __init__(self):
 		self.dir = "downsized_images/"
 		self.x = 650
-		self.y = 660
+		self.y = 670
 	
 	@abstractmethod
 	def get_obstacle(self):
