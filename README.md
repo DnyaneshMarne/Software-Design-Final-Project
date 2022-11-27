@@ -1,8 +1,10 @@
 # Software-Design-Final-Project
-Repo for the software design game
-![pumpkin](https://user-images.githubusercontent.com/64002247/204156746-b3c56176-c2d3-4ebe-8efc-4eb4abc392bb.png)
+Repo for the software design game  ![downsize_pumpkin](https://user-images.githubusercontent.com/64002247/204156780-43e5bd58-2c12-476d-8c18-6c8562461912.png)
+
+
 
 ## WITCHY WITCH ! 
+![flyingwitch](https://user-images.githubusercontent.com/64002247/204156773-ed68f9be-5005-4474-b6f1-749620cde878.png)
 
 This game is designed using software design pattern of Singleton, Abstract Factory and Clone using python object oriented code. 
 
