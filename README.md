@@ -3,7 +3,7 @@ Repo for the software design game
 
 ![castle2](https://user-images.githubusercontent.com/64002247/204157271-5495acdf-c640-4d48-8775-7021c3cd26b5.png)
 
-![downsize_pumpkin](https://user-images.githubusercontent.com/64002247/204156780-43e5bd58-2c12-476d-8c18-6c8562461912.png)
+                                                                      ![downsize_pumpkin](https://user-images.githubusercontent.com/64002247/204156780-43e5bd58-2c12-476d-8c18-6c8562461912.png)
 
 
 
@@ -14,7 +14,7 @@ This game is designed using software design pattern of Singleton, Abstract Facto
 
 ### Modules used 
 
-1. Python3![ghost](https://user-images.githubusercontent.com/64002247/204157258-cbdc9081-eb1c-4cb1-979b-7ec0e5fc333c.png)
+1. Python3
 
 2. PIL 
 3. TKinter
@@ -23,7 +23,7 @@ This game is designed using software design pattern of Singleton, Abstract Facto
 6. os
 7. abstractmethod, abc
 
-**and some ghosts** 
+              ** and some ghosts ** ![ghost](https://user-images.githubusercontent.com/64002247/204157258-cbdc9081-eb1c-4cb1-979b-7ec0e5fc333c.png)
 
 
 ### Getting Started
