@@ -1,5 +1,6 @@
 # Software-Design-Final-Project
 Repo for the software design game
+![pumpkin](https://user-images.githubusercontent.com/64002247/204156746-b3c56176-c2d3-4ebe-8efc-4eb4abc392bb.png)
 
 ## WITCHY WITCH ! 
 
