@@ -11,12 +11,14 @@ class ObsDynamics():
 
     def __init__(self,Gamew):
 
-        facObj = Factory()
-        self.ghost = facObj.create("Ghost")
-        self.castle1 = facObj.create("Castle1")
-        self.castle2 = facObj.create("Castle2")
-        self.tree = facObj.create("Tree") 
-        self.obs_pool = [self.castle1, self.castle2, self.tree]
+        self.facObj = Factory()
+        self.ghost = self.facObj.create("Ghost")
+        self.castle1 = self.facObj.create("Castle1")
+        self.castle2 = self.facObj.create("Castle2")
+        self.house = self.facObj.create("House")
+        self.tree = self.facObj.create("Tree") 
+        self.pumpkin = self.facObj.create("Pumpkin") 
+        self.obs_pool = [self.castle1, self.castle2, self.tree,self.house,self.pumpkin]
         self.gw = Gamew
         self.score = 0
         self.sWin = self.gw.getCanvas().create_text(15, 45, text="0", font='Impact 60', fill='#ffffff', anchor=W)
@@ -25,21 +27,28 @@ class ObsDynamics():
 
     def get_rand_obs(self):
         self.obs_x = 550
+        
         self.ghost_pos = random.randint(100, 300)
         self.obs_y = random.randint(600, 600)
-        self.obs_obj = self.obs_pool[random.randint(0,2)]
-        
-        self.obsFig = self.gw.getCanvas().create_image(self.obs_x, self.obs_y, image=self.obs_obj.get_obstacle("Tree"))
-        self.ghostObs = self.gw.getCanvas().create_image(self.obs_x, self.ghost_pos, image=self.ghost.get_obstacle("Ghost"))
+
+        self.obs_obj = self.obs_pool[random.randint(0,3)]
+        self.cloned_obj = self.facObj.clone(self.obs_obj)
+        self.pump_obj =self.facObj.clone(self.pumpkin)
+       
+        self.obsFig = self.gw.getCanvas().create_image(self.obs_x, self.obs_y, image=self.cloned_obj.get_obstacle())
+        self.pumpFig = self.gw.getCanvas().create_image(self.pump_obj.x, self.pump_obj.y, image=self.pump_obj.get_obstacle())
+        self.clonned_ghost = self.facObj.clone(self.ghost)
+        self.ghostObs = self.gw.getCanvas().create_image(self.obs_x, self.ghost_pos, image=self.clonned_ghost.get_obstacle())
 
     def ObsMotion(self):
 
         #Decrement x to make obstacles move
         self.obs_x -= 5
-
+        self.pump_obj.x -= 5
         self.gw.getCanvas().coords(self.ghostObs,self.obs_x, self.ghost_pos)
         self.gw.getCanvas().coords(self.obsFig,self.obs_x, self.obs_y)
-    
+        self.gw.getCanvas().coords(self.pumpFig,self.pump_obj.x,self.pump_obj.y)
+        
         # When obstacles go out of frame, bring them back in frame
         if self.obs_x < -100 :
             self.score += 1
@@ -89,6 +98,7 @@ class ObsDynamics():
         self.gw.posY = 200
         self.obs_x = 550
         self.score = 0
+        self.gw.getCanvas().itemconfig(self.sWin, text=str(self.score))
         self.gw.pause = False
         self.gw.getCanvas().delete(self.endScore)
         self.gw.getCanvas().delete(self.endRectangle)
