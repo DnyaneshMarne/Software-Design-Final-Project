@@ -57,7 +57,7 @@ class GameWindow:
                 self._window.after(20,self.witchUp) 
                
             else: self.upcount = 0  
-        else:
+        else: 
             self.Obstacles.RestartGame()
 
     def getCanvas(self):        

@@ -12,12 +12,12 @@ class ObsDynamics():
     def __init__(self,Gamew):
 
         self.facObj = Factory()
-        self.ghost = self.facObj.create("Ghost")
-        self.castle1 = self.facObj.create("Castle1")
-        self.castle2 = self.facObj.create("Castle2")
-        self.house = self.facObj.create("House")
-        self.tree = self.facObj.create("Tree") 
-        self.pumpkin = self.facObj.create("Pumpkin") 
+        self.ghost = self.facObj.create("Ghost",550,random.randint(100, 300))
+        self.castle1 = self.facObj.create("Castle1",550,random.randint(600, 600))
+        self.castle2 = self.facObj.create("Castle2",550,random.randint(600, 600))
+        self.house = self.facObj.create("House",550,random.randint(600, 600))
+        self.tree = self.facObj.create("Tree",550,random.randint(600, 600))
+        self.pumpkin = self.facObj.create("Pumpkin",650,670,0) 
         self.obs_pool = [self.castle1, self.castle2, self.tree,self.house,self.pumpkin]
         self.gw = Gamew
         self.score = 0
@@ -26,31 +26,26 @@ class ObsDynamics():
 
 
     def get_rand_obs(self):
-        self.obs_x = 550
-        
-        self.ghost_pos = random.randint(100, 300)
-        self.obs_y = random.randint(600, 600)
 
         self.obs_obj = self.obs_pool[random.randint(0,3)]
         self.cloned_obj = self.facObj.clone(self.obs_obj)
         self.pump_obj =self.facObj.clone(self.pumpkin)
        
-        self.obsFig = self.gw.getCanvas().create_image(self.obs_x, self.obs_y, image=self.cloned_obj.get_obstacle())
+        self.obsFig = self.gw.getCanvas().create_image(self.cloned_obj.x, self.cloned_obj.y, image=self.cloned_obj.get_obstacle())
         self.pumpFig = self.gw.getCanvas().create_image(self.pump_obj.x, self.pump_obj.y, image=self.pump_obj.get_obstacle())
         self.clonned_ghost = self.facObj.clone(self.ghost)
-        self.ghostObs = self.gw.getCanvas().create_image(self.obs_x, self.ghost_pos, image=self.clonned_ghost.get_obstacle())
+        self.ghostFig = self.gw.getCanvas().create_image(self.clonned_ghost.x, self.clonned_ghost.y, image=self.clonned_ghost.get_obstacle())
 
     def ObsMotion(self):
-
         #Decrement x to make obstacles move
-        self.obs_x -= 5
+        self.clonned_ghost.x -= 5
         self.pump_obj.x -= 5
-        self.gw.getCanvas().coords(self.ghostObs,self.obs_x, self.ghost_pos)
-        self.gw.getCanvas().coords(self.obsFig,self.obs_x, self.obs_y)
+        self.gw.getCanvas().coords(self.ghostFig,self.clonned_ghost.x, self.clonned_ghost.y)
+        self.gw.getCanvas().coords(self.obsFig,self.clonned_ghost.x, self.cloned_obj.y)
         self.gw.getCanvas().coords(self.pumpFig,self.pump_obj.x,self.pump_obj.y)
         
         # When obstacles go out of frame, bring them back in frame
-        if self.obs_x < -100 :
+        if self.clonned_ghost.x < -100 :
             self.score += 1
             self.gw.getCanvas().itemconfig(self.sWin, text=str(self.score))
             self.get_rand_obs()
@@ -60,7 +55,7 @@ class ObsDynamics():
 
     def DetectCollision(self):
 
-        if (self.obs_x < 150 and self.obs_x + 100 >= 55) and ((self.gw.posY >= self.ghost_pos - 10 and self.gw.posY < self.ghost_pos + 10)  or (self.gw.posY >= self.obs_y - 100)):
+        if (self.clonned_ghost.x < 150 and self.clonned_ghost.x + 100 >= 55) and ((self.gw.posY >= self.clonned_ghost.y - 10 and self.gw.posY < self.clonned_ghost.y + 10)  or (self.gw.posY >= self.cloned_obj.y - 100)):
             
             self.gw.pause = True
             self.ScoreBoard()
@@ -96,14 +91,14 @@ class ObsDynamics():
     def RestartGame(self):
 
         self.gw.posY = 200
-        self.obs_x = 550
+        self.clonned_ghost.x = 550
         self.score = 0
         self.gw.getCanvas().itemconfig(self.sWin, text=str(self.score))
         self.gw.pause = False
         self.gw.getCanvas().delete(self.endScore)
         self.gw.getCanvas().delete(self.endRectangle)
         self.gw.getCanvas().delete(self.endBest)
-        self.gw.getCanvas().delete(self.ghostObs)
+        self.gw.getCanvas().delete(self.ghostFig)
         self.gw.getCanvas().delete(self.obsFig)
 
         self.gw.run()
