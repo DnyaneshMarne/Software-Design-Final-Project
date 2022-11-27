@@ -20,7 +20,7 @@ This game is designed using software design pattern of Singleton, Abstract Facto
 6. os
 7. abstractmethod, abc
 
-                                                              and some ghosts ![downsize_ghost](https://user-images.githubusercontent.com/64002247/204156793-1035e6a5-cb13-4327-b8b4-4ca3a37e47c5.png)
+**and some ghosts** ![downsize_ghost](https://user-images.githubusercontent.com/64002247/204156793-1035e6a5-cb13-4327-b8b4-4ca3a37e47c5.png)
 
 
 ### Getting Started
