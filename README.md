@@ -6,8 +6,7 @@ Repo for the software design game
 
                                                                      
 
-## WITCHY WITCH ! 
-![flyingwitch](https://user-images.githubusercontent.com/64002247/204156773-ed68f9be-5005-4474-b6f1-749620cde878.png)
+## WITCHY WITCH !  ![flyingwitch](https://user-images.githubusercontent.com/64002247/204156773-ed68f9be-5005-4474-b6f1-749620cde878.png)
 
 This game is designed using software design pattern of Singleton, Abstract Factory and Clone using python object oriented code. 
 
