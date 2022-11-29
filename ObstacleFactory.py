@@ -6,11 +6,10 @@ import random
 
 class Obstacles(ABC) :
 
-	def __init__(self,x=650,y=670,speed=0,name = 'NotGhost'):
+	def __init__(self,x=650,y=670,name = 'NotGhost'):
 		self.dir = "downsized_images/"
 		self.x = x
 		self.y = y
-		self.speed = speed
 		self.name = name
 	
 	@abstractmethod
@@ -20,8 +19,8 @@ class Obstacles(ABC) :
 
 class Ghost(Obstacles):
 	""" returns a ghost obstacle """
-	def __init__(self,x=650,y=670,speed=0,name = 'Ghost'):
-		super().__init__(x,y,speed,name)
+	def __init__(self,x=650,y=670,name = 'Ghost'):
+		super().__init__(x,y,name)
 		img = (Image.open("images/ghost.png"))
 		resized_image= img.resize((150, 105), Image.LANCZOS)
 		self.img = resized_image.save(self.dir + "downsize_ghost.png")
