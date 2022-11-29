@@ -6,10 +6,11 @@ import random
 
 class Obstacles(ABC) :
 
-	def __init__(self,x=650,y=670,name = 'NotGhost'):
+	def __init__(self,x=650,y=670,speed=0,name = 'NotGhost'):
 		self.dir = "downsized_images/"
 		self.x = x
 		self.y = y
+		self.speed = speed
 		self.name = name
 	
 	@abstractmethod
@@ -19,12 +20,11 @@ class Obstacles(ABC) :
 
 class Ghost(Obstacles):
 	""" returns a ghost obstacle """
-	def __init__(self,x=650,y=670,name = 'Ghost'):
-		super().__init__(x,y,name)
+	def __init__(self,x=650,y=670,speed=0,name = 'Ghost'):
+		super().__init__(x,y,speed,name)
 		img = (Image.open("images/ghost.png"))
 		resized_image= img.resize((150, 105), Image.LANCZOS)
 		self.img = resized_image.save(self.dir + "downsize_ghost.png")
-
 		
 
 	def get_obstacle(self):
@@ -33,8 +33,8 @@ class Ghost(Obstacles):
 
 class Castle1(Obstacles):
 	""" returns a castle1 obstacle """
-	def __init__(self,x=650,y=670):
-		super().__init__(x,y)
+	def __init__(self,x=650,y=670,name = 'Castle1'):
+		super().__init__(x,y,name)
 		img = (Image.open("images/castle1.png"))
 		resized_image= img.resize((200, 405), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_castle1.png")
@@ -45,8 +45,8 @@ class Castle1(Obstacles):
 
 class Castle2(Obstacles):
 	""" returns a castle2 obstacle """
-	def __init__(self,x=650,y=670):
-		super().__init__(x,y)
+	def __init__(self,x=650,y=670,name = 'Castle2'):
+		super().__init__(x,y,name)
 		img = (Image.open("images/castle2.png"))
 		resized_image= img.resize((200, 405), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_castle2.png")
@@ -57,8 +57,8 @@ class Castle2(Obstacles):
 
 class Tree(Obstacles):
 	""" returns a tree obstacle """
-	def __init__(self,x=650,y=670):
-		super().__init__(x,y)
+	def __init__(self,x=650,y=670,name = 'Tree'):
+		super().__init__(x,y,name)
 		img = (Image.open("images/tree.png"))
 		resized_image= img.resize((200, 405), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_tree.png")
@@ -70,8 +70,8 @@ class Tree(Obstacles):
 
 class House(Obstacles):
 	""" returns a tree obstacle """
-	def __init__(self,x=650,y=670):
-		super().__init__(x,y)
+	def __init__(self,x=650,y=670,name = 'House'):
+		super().__init__(x,y,name)
 		img = (Image.open("images/house.png"))
 		resized_image= img.resize((200, 405), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_house.png")
@@ -82,8 +82,8 @@ class House(Obstacles):
 
 class Pumpkin(Obstacles):
 	""" returns a tree obstacle """
-	def __init__(self,x=650,y=670):
-		super().__init__(x,y)
+	def __init__(self,x=650,y=670,name = 'Pumpkin'):
+		super().__init__(x,y,name)
 		img = (Image.open("images/pumpkin.png"))
 		resized_image= img.resize((100, 100), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_pumpkin.png")
