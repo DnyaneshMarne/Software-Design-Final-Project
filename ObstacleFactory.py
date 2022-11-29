@@ -6,11 +6,10 @@ import random
 
 class Obstacles(ABC) :
 
-	def __init__(self,x=650,y=670,speed=0,name = 'NotGhost'):
+	def __init__(self,x=650,y=670,name = 'NotGhost'):
 		self.dir = "downsized_images/"
 		self.x = x
 		self.y = y
-		self.speed = speed
 		self.name = name
 	
 	@abstractmethod
@@ -20,8 +19,8 @@ class Obstacles(ABC) :
 
 class Ghost(Obstacles):
 	""" returns a ghost obstacle """
-	def __init__(self,x=650,y=670,speed=0,name = 'Ghost'):
-		super().__init__(x,y,speed,name)
+	def __init__(self,x=650,y=670,name = 'Ghost'):
+		super().__init__(x,y,name)
 		img = (Image.open("images/ghost.png"))
 		resized_image= img.resize((150, 105), Image.LANCZOS)
 		self.img = resized_image.save(self.dir + "downsize_ghost.png")
@@ -34,8 +33,8 @@ class Ghost(Obstacles):
 
 class Castle1(Obstacles):
 	""" returns a castle1 obstacle """
-	def __init__(self,x=650,y=670,speed=0):
-		super().__init__(x,y,speed)
+	def __init__(self,x=650,y=670):
+		super().__init__(x,y)
 		img = (Image.open("images/castle1.png"))
 		resized_image= img.resize((200, 405), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_castle1.png")
@@ -46,8 +45,8 @@ class Castle1(Obstacles):
 
 class Castle2(Obstacles):
 	""" returns a castle2 obstacle """
-	def __init__(self,x=650,y=670,speed=0):
-		super().__init__(x,y,speed)
+	def __init__(self,x=650,y=670):
+		super().__init__(x,y)
 		img = (Image.open("images/castle2.png"))
 		resized_image= img.resize((200, 405), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_castle2.png")
@@ -58,8 +57,8 @@ class Castle2(Obstacles):
 
 class Tree(Obstacles):
 	""" returns a tree obstacle """
-	def __init__(self,x=650,y=670,speed=0):
-		super().__init__(x,y,speed)
+	def __init__(self,x=650,y=670):
+		super().__init__(x,y)
 		img = (Image.open("images/tree.png"))
 		resized_image= img.resize((200, 405), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_tree.png")
@@ -71,8 +70,8 @@ class Tree(Obstacles):
 
 class House(Obstacles):
 	""" returns a tree obstacle """
-	def __init__(self,x=650,y=670,speed=0):
-		super().__init__(x,y,speed)
+	def __init__(self,x=650,y=670):
+		super().__init__(x,y)
 		img = (Image.open("images/house.png"))
 		resized_image= img.resize((200, 405), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_house.png")
@@ -83,8 +82,8 @@ class House(Obstacles):
 
 class Pumpkin(Obstacles):
 	""" returns a tree obstacle """
-	def __init__(self,x=650,y=670,speed=0):
-		super().__init__(x,y,speed)
+	def __init__(self,x=650,y=670):
+		super().__init__(x,y)
 		img = (Image.open("images/pumpkin.png"))
 		resized_image= img.resize((100, 100), Image.LANCZOS)
 		self.im1 = resized_image.save(self.dir + "downsize_pumpkin.png")
@@ -101,15 +100,15 @@ class Factory():
 	def __init__ (self):
 		self.obstacles = {
 		"Ghost": Ghost,
-        "Castle1": Castle1,
-        "Castle2": Castle2,
-        "Tree": Tree,
+       		"Castle1": Castle1,
+        	"Castle2": Castle2,
+       		"Tree": Tree,
 		"House" : House,
 		"Pumpkin" : Pumpkin
 	}
 
-	def create(self,obstacle_name = "Ghost",x=0,y=0,speed=0):
-		return self.obstacles[obstacle_name](x,y,speed)
+	def create(self,obstacle_name = "Ghost",x=0,y=0):
+		return self.obstacles[obstacle_name](x,y)
 	
 	def clone(self,obj):
 		newObj = copy.deepcopy(obj)
