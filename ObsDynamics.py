@@ -4,6 +4,7 @@ import random
 import os
 from abc import ABC,abstractmethod
 from ObstacleFactory import Factory
+from queue import PriorityQueue
 
 
 
@@ -17,10 +18,12 @@ class ObsDynamics():
         self.castle2 = self.facObj.create("Castle2",550,random.randint(600, 600))
         self.house = self.facObj.create("House",550,random.randint(600, 600))
         self.tree = self.facObj.create("Tree",550,random.randint(600, 600))
-        self.pumpkin = self.facObj.create("Pumpkin",650,670,0) 
+        self.pumpkin = self.facObj.create("Pumpkin",650,670) 
         self.obs_pool = [self.castle1, self.castle2, self.tree,self.house,self.pumpkin]
         self.gw = Gamew
         self.score = 0
+        self.priorityObstacle = PriorityQueue()
+        self.priorityObstacle.put((self.ghost.x,self.ghost.y,self.ghost))
         self.sWin = self.gw.getCanvas().create_text(15, 45, text="0", font='Impact 60', fill='#ffffff', anchor=W)
         random.seed(10)
 
@@ -30,7 +33,7 @@ class ObsDynamics():
         self.obs_obj = self.obs_pool[random.randint(0,3)]
         self.cloned_obj = self.facObj.clone(self.obs_obj)
         self.pump_obj =self.facObj.clone(self.pumpkin)
-       
+
         self.obsFig = self.gw.getCanvas().create_image(self.cloned_obj.x, self.cloned_obj.y, image=self.cloned_obj.get_obstacle())
         self.pumpFig = self.gw.getCanvas().create_image(self.pump_obj.x, self.pump_obj.y, image=self.pump_obj.get_obstacle())
         self.clonned_ghost = self.facObj.clone(self.ghost)
@@ -83,9 +86,9 @@ class ObsDynamics():
             scoreFile.close()
 			
     def EndGameScreen(self):
-        self.endRectangle = self.gw.getCanvas().create_rectangle(0, 0, 550, 700, fill='#4EC0CA')
-        self.endScore = self.gw.getCanvas().create_text(15, 200, text="Your score: " + str(self.score), font='Impact 50', fill='#ffffff', anchor=W)
-        self.endBest = self.gw.getCanvas().create_text(15, 280, text="Best score: " + str(self.bestScore), font='Impact 50', fill='#ffffff', anchor=W)
+        #self.endRectangle = self.gw.getCanvas().create_rectangle(0, 0, 550, 700, fill='#4EC0CA')
+        self.endScore = self.gw.getCanvas().create_text(15, 200, text="Your score: " + str(self.score), font='Impact 50', fill='#FFFF00', anchor=W)
+        self.endBest = self.gw.getCanvas().create_text(15, 280, text="Best score: " + str(self.bestScore), font='Impact 50', fill='#FFFF00', anchor=W)
 
 
     def RestartGame(self):
@@ -96,7 +99,7 @@ class ObsDynamics():
         self.gw.getCanvas().itemconfig(self.sWin, text=str(self.score))
         self.gw.pause = False
         self.gw.getCanvas().delete(self.endScore)
-        self.gw.getCanvas().delete(self.endRectangle)
+        #self.gw.getCanvas().delete(self.endRectangle)
         self.gw.getCanvas().delete(self.endBest)
         self.gw.getCanvas().delete(self.ghostFig)
         self.gw.getCanvas().delete(self.obsFig)
@@ -104,9 +107,3 @@ class ObsDynamics():
         self.gw.run()
 
     
-
-
-
-
-
-
