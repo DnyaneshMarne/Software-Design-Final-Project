@@ -1,4 +1,5 @@
 from tkinter import *
+import PIL
 from PIL import Image
 from abc import ABC,abstractmethod
 import copy

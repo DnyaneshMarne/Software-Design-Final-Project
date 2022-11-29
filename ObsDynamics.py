@@ -4,6 +4,8 @@ import random
 import os
 from abc import ABC,abstractmethod
 from ObstacleFactory import Factory
+import time
+import tkinter.font as font
 
 #class for handling collision and motion of obstacles
 class ObsDynamics():
@@ -56,7 +58,7 @@ class ObsDynamics():
             self.get_rand_obs()
 
         if self.gw.pause == False :
-            self.gw.getWindow().after(20,self.ObsMotion)
+            self.gw.getWindow().after(self.gw.framerate,self.ObsMotion)
 
     #method used for detecting if witch has collided with any obstacle on the screen
     def DetectCollision(self):
@@ -68,7 +70,7 @@ class ObsDynamics():
             self.EndGameScreen()
         
         if self.gw.pause == False :
-            self.gw.getWindow().after(20,self.DetectCollision)
+            self.gw.getWindow().after(self.gw.framerate,self.DetectCollision)
 
     #method to show current score and update the high score if needed
     def ScoreBoard(self):
@@ -91,21 +93,32 @@ class ObsDynamics():
 	
     #method to render end game screen text
     def EndGameScreen(self):
-        self.endScore = self.gw.getCanvas().create_text(15, 200, text="Your score: " + str(self.score), font='Impact 50', fill='#FFFF00', anchor=W)
-        self.endBest = self.gw.getCanvas().create_text(15, 280, text="Best score: " + str(self.bestScore), font='Impact 50', fill='#FFFF00', anchor=W)
+        self.gw.getCanvas().delete(self.ghostFig)
+        self.gw.getCanvas().delete(self.obsFig)
+        self.gw.getCanvas().delete(self.gw._witch)
+        #self.endRectangle = self.gw.getCanvas().create_rectangle(0, 140, 550, 320, fill='#4EC0CA')
+        self.GameOver = self.gw.getCanvas().create_text(170, 170, text="Game Over", font='Impact 50', fill='#FF0000', anchor=W)
+        self.endScore = self.gw.getCanvas().create_text(170, 230, text="Your score: " + str(self.score), font='Impact 40', fill='#FFFF00', anchor=W)
+        self.endBest = self.gw.getCanvas().create_text(170, 280, text="Best score: " + str(self.bestScore), font='Impact 40', fill='#FFFF00', anchor=W)
+       
+        #self.restartText = self.gw.getCanvas().create_text(170, 340, text="Press spacebar to restart", font='Impact 20', fill='#FFFFFF', anchor=W)
 
+    
     #if witch collides and if spacebar is pressed again game restarts
     def RestartGame(self):
-
+        self.gw.getCanvas().delete(self.GameOver)
+        self.gw.getCanvas().delete(self.endScore)
+        #self.gw.getCanvas().delete(self.restartText) 
+        #self.gw.getCanvas().delete(self.endRectangle)
+        self.gw.getCanvas().delete(self.endBest)
+        self.gw.getCanvas().delete(self.ghostFig)
+        self.gw.getCanvas().delete(self.obsFig) 
         self.gw.posY = 200
         self.clonned_ghost.x = 550
         self.score = 0
         self.gw.getCanvas().itemconfig(self.sWin, text=str(self.score))
         self.gw.pause = False
-        self.gw.getCanvas().delete(self.endScore)
-        #self.gw.getCanvas().delete(self.endRectangle)
-        self.gw.getCanvas().delete(self.endBest)
-        self.gw.getCanvas().delete(self.ghostFig)
-        self.gw.getCanvas().delete(self.obsFig)
+        self.gw._witch = self.gw.getCanvas().create_image(self.gw.posX,self.gw.posY,image=self.gw.witchImg)
+        
 
         self.gw.run()
