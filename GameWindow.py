@@ -5,6 +5,8 @@ import tkinter.font as font
 import pygame
 
 class GameWindow:
+    """This is a singleton class of creating a CANVAS of game window, buttons """
+
     __instance = None
     @staticmethod
     def getInstance():
@@ -25,6 +27,8 @@ class GameWindow:
             self.upcount = 0
             self._window=Tk()
             self.startgame = False
+
+            #Creating witch button just once 
             
             self._window.title("Witchy Witch")
             self._window.geometry('550x700')
@@ -40,6 +44,8 @@ class GameWindow:
             self.witchImg = PhotoImage(file="flyingwitch.png")
             self._witch = self._canvas.create_image(self.posX,self.posY,image=self.witchImg)
             self.Obstacles = ObsDynamics(self.getInstance())
+
+    # witch movement functions
 
     def witchDown(self):
         
@@ -90,12 +96,13 @@ class GameWindow:
         self.button.place(x = 170, y = 350)
         self.button.pack(fill=X)
 
-
  
     def run(self):
         "Run application"
         
         if self.startgame :
+            # after pressing the start button , start the game
+            
             self._window.after(self.framerate,self.witchDown)
             self._window.after(self.framerate,self.Obstacles.get_rand_obs)
             self._window.after(self.framerate,self.Obstacles.ObsMotion)
