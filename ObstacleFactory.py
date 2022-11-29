@@ -5,10 +5,14 @@ from abc import ABC,abstractmethod
 import copy
 import random
 
-#obstacle abstract factory class
+# Obstacle abstract factory class
+
 class Obstacles(ABC) :
 
+	"""This is an abstract factory class with ghosts, house, castle , tree acting as product"""
+
 	def __init__(self,x=650,y=670,name = 'NotGhost'):
+		
 		#directory where images are stored
 		self.dir = "downsized_images/"
 		# x co-ordinate of obstacle
@@ -109,9 +113,9 @@ class Factory():
 	def __init__ (self):
 		self.obstacles = {
 		"Ghost": Ghost,
-       		"Castle1": Castle1,
-        	"Castle2": Castle2,
-       		"Tree": Tree,
+       	"Castle1": Castle1,
+        "Castle2": Castle2,
+       	"Tree": Tree,
 		"House" : House,
 		"Pumpkin" : Pumpkin
 	}
@@ -119,8 +123,10 @@ class Factory():
 	def create(self,obstacle_name = "Ghost",x=0,y=0):
 		return self.obstacles[obstacle_name](x,y)
 	
-	# clone the obstacle with new co-ordinates
+	# Clone design pattern the obstacle with new co-ordinates
 	def clone(self,obj):
+		"""This is clone design pattern implementation of cloning objects"""
+
 		newObj = copy.deepcopy(obj)
 		if newObj.name == 'Ghost':
 			newObj.y = random.randint(50, 330)
