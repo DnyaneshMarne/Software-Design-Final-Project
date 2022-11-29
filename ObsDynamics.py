@@ -19,6 +19,7 @@ class ObsDynamics():
         self.house = self.facObj.create("House",550,random.randint(600, 600))
         self.tree = self.facObj.create("Tree",550,random.randint(600, 600))
         self.pumpkin = self.facObj.create("Pumpkin",650,670) 
+
         #array of obstacles we create at the bottom of the screen
         self.obs_pool = [self.castle1, self.castle2, self.tree,self.house,self.pumpkin]
         #instance of GameWindow class passed throught GameWindow constructor
@@ -96,20 +97,18 @@ class ObsDynamics():
         self.gw.getCanvas().delete(self.ghostFig)
         self.gw.getCanvas().delete(self.obsFig)
         self.gw.getCanvas().delete(self.gw._witch)
-        #self.endRectangle = self.gw.getCanvas().create_rectangle(0, 140, 550, 320, fill='#4EC0CA')
+        
         self.GameOver = self.gw.getCanvas().create_text(170, 170, text="Game Over", font='Impact 50', fill='#FF0000', anchor=W)
         self.endScore = self.gw.getCanvas().create_text(170, 230, text="Your score: " + str(self.score), font='Impact 40', fill='#FFFF00', anchor=W)
         self.endBest = self.gw.getCanvas().create_text(170, 280, text="Best score: " + str(self.bestScore), font='Impact 40', fill='#FFFF00', anchor=W)
        
-        #self.restartText = self.gw.getCanvas().create_text(170, 340, text="Press spacebar to restart", font='Impact 20', fill='#FFFFFF', anchor=W)
-
+        
     
     #if witch collides and if spacebar is pressed again game restarts
     def RestartGame(self):
+
         self.gw.getCanvas().delete(self.GameOver)
         self.gw.getCanvas().delete(self.endScore)
-        #self.gw.getCanvas().delete(self.restartText) 
-        #self.gw.getCanvas().delete(self.endRectangle)
         self.gw.getCanvas().delete(self.endBest)
         self.gw.getCanvas().delete(self.ghostFig)
         self.gw.getCanvas().delete(self.obsFig) 
